@@ -1,2 +1,5 @@
-﻿  main.cpp
+﻿  Game.cpp
+  main.cpp
+  TextureManager.cpp
+  Generating Code...
   MyProj.vcxproj -> C:\Users\robbi\source\GameDev\Debug\MyProj.exe
