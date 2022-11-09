@@ -1,9 +1,9 @@
 #include "Game.h"
 #include "TextureManager.h"
+#include "GameObject.h"
 
-SDL_Texture* playerTex;
-
-SDL_Rect srcR, destR;
+GameObject* player;
+GameObject* enemy;
 
 
 Game::Game()
@@ -32,13 +32,15 @@ void Game::init(const char* title, int xpos, int ypos, int width, int height, bo
 			SDL_SetRenderDrawColor(renderer, 255, 0, 255, 255);
 			std::cout << "Renderer created!" << std::endl;
 		}
-
 		isRunning = true;
 	} else {
 		isRunning = false;
 	}
+
+	player = new GameObject("RawAssets/Riko.png", renderer, 0, 0);
+	enemy = new GameObject("RawAssets/TestSS.png", renderer, 50, 50);
 	
-	playerTex = TextureManager::LoadTexture("RawAssets/Riko.png", renderer);
+	//playerTex = TextureManager::LoadTexture("RawAssets/Riko.png", renderer);
 
 	
 }
@@ -62,11 +64,8 @@ void Game::handleEvents()
 
 void Game::update()
 {
-	cnt++;
-	destR.h = 128;
-	destR.w = 128;
-	destR.x = cnt;
-	std::cout << cnt << std::endl;
+	player->Update();
+	enemy->Update();
 }
 
 void Game::render()
@@ -77,7 +76,10 @@ void Game::render()
 	// Using painter's algorithm
 	// Stuff added first is in the background
 	// 
-	SDL_RenderCopy(renderer, playerTex, NULL, &destR); // pass(renderer, texture you want, src rectange, dst rectangle
+	player->Render();
+	enemy->Render();
+
+	//SDL_RenderCopy(renderer, playerTex, NULL, &destR); // pass(renderer, texture you want, src rectange, dst rectangle
 
 	SDL_RenderPresent(renderer);
 }
