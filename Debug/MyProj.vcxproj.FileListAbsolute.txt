@@ -1,1 +1,2 @@
 C:\Users\robbi\source\MyProj\Debug\MyProj.exe
+C:\Users\robbi\source\GameDev\Debug\MyProj.exe
