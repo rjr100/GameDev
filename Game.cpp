@@ -1,9 +1,18 @@
 #include "Game.h"
 #include "TextureManager.h"
 #include "GameObject.h"
+#include "Map.h"
+
+#include "ECS.h"
+#include "Components.h"
 
 GameObject* player;
 GameObject* enemy;
+Map* map;
+SDL_Renderer* Game::renderer = nullptr;
+
+Manager manager;
+auto& newPlayer(manager.addEntity());
 
 
 Game::Game()
@@ -29,7 +38,7 @@ void Game::init(const char* title, int xpos, int ypos, int width, int height, bo
 
 		renderer = SDL_CreateRenderer(window, -1, 0);
 		if (renderer) {
-			SDL_SetRenderDrawColor(renderer, 255, 0, 255, 255);
+			SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
 			std::cout << "Renderer created!" << std::endl;
 		}
 		isRunning = true;
@@ -37,12 +46,14 @@ void Game::init(const char* title, int xpos, int ypos, int width, int height, bo
 		isRunning = false;
 	}
 
-	player = new GameObject("RawAssets/Riko.png", renderer, 0, 0);
-	enemy = new GameObject("RawAssets/TestSS.png", renderer, 50, 50);
+	player = new GameObject("RawAssets/Riko.png", 0, 0);
+	enemy = new GameObject("RawAssets/TestSS.png", 50, 50);
+	map = new Map();
 	
-	//playerTex = TextureManager::LoadTexture("RawAssets/Riko.png", renderer);
+	newPlayer.addComponent<PositionComponnet>().setPos(500, 500);
+	
 
-	
+	//playerTex = TextureManager::LoadTexture("RawAssets/Riko.png", renderer);
 }
 
 void Game::handleEvents()
@@ -66,6 +77,9 @@ void Game::update()
 {
 	player->Update();
 	enemy->Update();
+	manager.update();
+	std::cout << newPlayer.getComponent<PositionComponnet>().x() << "," <<
+		newPlayer.getComponent<PositionComponnet>().y() << std::endl;
 }
 
 void Game::render()
@@ -76,6 +90,7 @@ void Game::render()
 	// Using painter's algorithm
 	// Stuff added first is in the background
 	// 
+	map->DrawMap();
 	player->Render();
 	enemy->Render();
 

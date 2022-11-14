@@ -13,7 +13,7 @@ int main(int args, char* argsv[])
 
 	game = new Game();
 
-	game->init("GameWindow", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 800, 600, false);
+	game->init("GameWindow", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 800, 640, false); // make divisible by 32
 
 	while (game->running())
 	{
