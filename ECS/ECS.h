@@ -84,6 +84,7 @@ public:
 		componentBitSet[getComponentTypeID<T>()] = true;
 
 		c->init();
+
 		return *c;
 	}
 
@@ -107,6 +108,7 @@ public:
 	{
 		for (auto& e : entities) e->update();
 	}
+
 	void draw()
 	{
 		for (auto& e : entities) e->draw();
